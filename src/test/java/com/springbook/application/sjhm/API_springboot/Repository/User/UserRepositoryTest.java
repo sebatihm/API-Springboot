@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+
+import com.springbook.application.sjhm.API_springboot.Model.User.AuthServerId;
 import com.springbook.application.sjhm.API_springboot.Model.User.User;
 import com.springbook.application.sjhm.API_springboot.Model.User.UserRole;
 import com.springbook.application.sjhm.orm.jpa.UniqueIdGenerator;
@@ -23,15 +25,13 @@ public class UserRepositoryTest {
 
     @Test
     public void testStoreUser() {
-    HashSet<UserRole> roles = new HashSet<>();
-    roles.add(UserRole.OFFICER);
-    User user = repository.save(new User(repository.nextId(),
-                            "alex.foley@beverly-hills.com",
-                            "my-secret-pwd",
-                            roles));
-    
-    assertThat(user).isNotNull();
-    assertThat(repository.count()).isEqualTo(1L);
+        User user = repository.save(new User(repository.nextId(),
+                "alex.foley@beverly-hills.com",
+                new AuthServerId(UUID.randomUUID()),
+                "c41536a5a8b9d3f14a7e5472a5322b5e1f76a6e7a9255c2c2e7e0d3a2c5b9d0"));
+        assertThat(user).isNotNull();
+
+        assertThat(repository.count()).isEqualTo(1L);
     }
 
     @TestConfiguration
