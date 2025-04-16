@@ -1,25 +1,38 @@
 package com.springbook.application.sjhm.API_springboot.Repository.User;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 
 import com.springbook.application.sjhm.API_springboot.Model.User.AuthServerId;
 import com.springbook.application.sjhm.API_springboot.Model.User.User;
 import com.springbook.application.sjhm.orm.jpa.UniqueIdGenerator;
 import com.springbook.application.sjhm.orm.jpa.InMemoryUniqueIdGenerator;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) 
+// Sintxis actualizada
+@ActiveProfiles("integration-test") 
 public class UserRepositoryTest {
 
     @Autowired
     private UserRepository repository;
+    @PersistenceContext
+    private EntityManager entityManager;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Test
     public void testStoreUser() {
@@ -30,6 +43,11 @@ public class UserRepositoryTest {
         assertThat(user).isNotNull();
 
         assertThat(repository.count()).isEqualTo(1L);
+
+        entityManager.flush(); 
+
+        assertThat(jdbcTemplate.queryForObject("SELECT count(*) FROM copsboot_user", Long.class)).isEqualTo(1L); //<4>
+        assertThat(jdbcTemplate.queryForObject("SELECT email FROM copsboot_user", String.class)).isEqualTo("alex.foley@beverly-hills.com");
     }
 
     @TestConfiguration
