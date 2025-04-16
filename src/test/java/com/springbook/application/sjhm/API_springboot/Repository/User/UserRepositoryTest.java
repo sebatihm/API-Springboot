@@ -8,11 +8,9 @@ import org.springframework.context.annotation.Bean;
 
 import com.springbook.application.sjhm.API_springboot.Model.User.AuthServerId;
 import com.springbook.application.sjhm.API_springboot.Model.User.User;
-import com.springbook.application.sjhm.API_springboot.Model.User.UserRole;
 import com.springbook.application.sjhm.orm.jpa.UniqueIdGenerator;
 import com.springbook.application.sjhm.orm.jpa.InMemoryUniqueIdGenerator;
 
-import java.util.HashSet;
 import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 

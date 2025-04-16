@@ -1,6 +1,7 @@
 package com.springbook.application.sjhm.API_springboot.Model.User.Web;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,11 +45,12 @@ public class UserRestController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED) 
-    public UserDTO createUser(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateUserRequest request) { 
-        CreateUserParameters parameters = request.toParameters(jwt); 
-        User user = userService.createUser(parameters);
-        return UserDTO.fromUser(user); 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('OFFICER')") 
+    public UserDTO createUser(@AuthenticationPrincipal Jwt jwt,  @RequestBody CreateUserRequest request) {
+    CreateUserParameters parameters = request.toParameters(jwt);
+    User user = userService.createUser(parameters);
+    return UserDTO.fromUser(user);
     }
 
 }
