@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,9 +27,10 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+
 
 @AnotationControllerTest(ReportRestController.class)
 public class ReportRestControllerTest {
@@ -57,17 +59,15 @@ public class ReportRestControllerTest {
                         userId,
                         Instant.parse("2023-04-11T22:59:03.189+02:00"),
                         "This is a test report description. The suspect was wearing a black hat."));
-        mockMvc.perform(post("/api/reports")
+        mockMvc.perform(multipart("/api/reports") //<.>
+                        .file(new MockMultipartFile("image", "picture.png", MediaType.IMAGE_PNG_VALUE, new byte[]{1,2,3})) //<.>
+                        .param("dateTime", "2023-04-11T22:59:03.189+02:00") //<.>
+                        .param("description", "This is a test report description. The suspect was wearing a black hat.")
+                        .param("trafficIncident", "false")
+                        .param("numberOfInvolvedCars", "0")
                         .with(jwt().jwt(builder -> builder.subject(authServerId.value().toString())
                                         .claim("email", "wim@example.com"))
-                                .authorities(new SimpleGrantedAuthority("ROLE_OFFICER")))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                    "dateTime": "2023-04-11T22:59:03.189+02:00",
-                                    "description": "This is a test report description. The suspect was wearing a black hat."
-                                }
-                                """))
+                                .authorities(new SimpleGrantedAuthority("ROLE_OFFICER"))))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").exists())
                 .andExpect(jsonPath("reporter").value("wim@example.com"))
