@@ -1,4 +1,4 @@
-package com.springbook.application.sjhm.API_springboot.Model.User;
+package com.springbook.application.sjhm.API_springboot.Model.Converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -1,4 +1,4 @@
-package com.springbook.application.sjhm.API_springboot.Model.User.Web;
+package com.springbook.application.sjhm.API_springboot.Model.Web.Controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springbook.application.sjhm.API_springboot.Model.User.AuthServerId;
+import com.springbook.application.sjhm.API_springboot.Model.Converter.AuthServerId;
 import com.springbook.application.sjhm.API_springboot.Model.User.CreateUserParameters;
 import com.springbook.application.sjhm.API_springboot.Model.User.User;
+import com.springbook.application.sjhm.API_springboot.Model.Web.DTO.UserDTO;
+import com.springbook.application.sjhm.API_springboot.Model.Web.Request.CreateUserRequest;
 import com.springbook.application.sjhm.API_springboot.Service.UserService;
+
+import jakarta.validation.Valid;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +51,7 @@ public class UserRestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('OFFICER')") 
-    public UserDTO createUser(@AuthenticationPrincipal Jwt jwt,  @RequestBody CreateUserRequest request) {
+    public UserDTO createUser(@AuthenticationPrincipal Jwt jwt,  @Valid @RequestBody CreateUserRequest request) {
     CreateUserParameters parameters = request.toParameters(jwt);
     User user = userService.createUser(parameters);
     return UserDTO.fromUser(user);

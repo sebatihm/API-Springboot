@@ -1,4 +1,4 @@
-package com.springbook.application.sjhm.API_springboot.Model.User.Web;
+package com.springbook.application.sjhm.API_springboot.Model.Web.DTO;
 
 
 import java.util.UUID;

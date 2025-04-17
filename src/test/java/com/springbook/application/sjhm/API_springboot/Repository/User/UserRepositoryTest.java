@@ -1,7 +1,7 @@
 package com.springbook.application.sjhm.API_springboot.Repository.User;
 
 
-import com.springbook.application.sjhm.API_springboot.Model.User.AuthServerId;
+import com.springbook.application.sjhm.API_springboot.Model.Converter.AuthServerId;
 import com.springbook.application.sjhm.API_springboot.Model.User.User;
 import com.springbook.application.sjhm.orm.jpa.UniqueIdGenerator;
 import com.springbook.application.sjhm.orm.jpa.InMemoryUniqueIdGenerator;

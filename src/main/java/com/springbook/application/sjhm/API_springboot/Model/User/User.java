@@ -1,5 +1,6 @@
 package com.springbook.application.sjhm.API_springboot.Model.User;
 
+import com.springbook.application.sjhm.API_springboot.Model.Converter.AuthServerId;
 import com.springbook.application.sjhm.orm.jpa.AbstractEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

@@ -1,4 +1,4 @@
-package com.springbook.application.sjhm.API_springboot.Model.User;
+package com.springbook.application.sjhm.API_springboot.Model.Converter;
 
 import org.springframework.util.Assert;
 import java.util.UUID;

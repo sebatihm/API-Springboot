@@ -1,10 +1,11 @@
 package com.springbook.application.sjhm.API_springboot.Model.User.Web;
 
 import com.springbook.application.sjhm.API_springboot.Anotation.AnotationControllerTest;
-import com.springbook.application.sjhm.API_springboot.Model.User.AuthServerId;
+import com.springbook.application.sjhm.API_springboot.Model.Converter.AuthServerId;
 import com.springbook.application.sjhm.API_springboot.Model.User.CreateUserParameters;
 import com.springbook.application.sjhm.API_springboot.Model.User.User;
 import com.springbook.application.sjhm.API_springboot.Model.User.UserId;
+import com.springbook.application.sjhm.API_springboot.Model.Web.Controllers.UserRestController;
 import com.springbook.application.sjhm.API_springboot.Service.UserService;
 
 import org.junit.jupiter.api.Test;
