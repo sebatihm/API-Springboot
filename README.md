@@ -30,3 +30,15 @@ Una vez que los contenedores están funcionando se ejecuta el proyecto mediante 
 
 * docker-compose up -d
 * ./mvnw spring-boot:run
+
+## Configuracion de Docker
+En esta rama se encuentra el desarrollo de la API Rest, sin embargo se creo la rama Docker para poder realizar los cambios necesarios para la dockerizacion del API Rest
+[Rama Docker](https://github.com/sebatihm/API-Springboot/tree/docker)
+
+``Dockerfile``
+```
+  FROM openjdk:21-slim
+  COPY . /usr/src/myapp
+  WORKDIR /usr/src/myapp
+  CMD ./mvnw spring-boot:run
+```
