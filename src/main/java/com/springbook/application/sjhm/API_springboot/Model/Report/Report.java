@@ -7,8 +7,10 @@ import com.springbook.application.sjhm.orm.jpa.AbstractEntity;
 import com.springbook.application.sjhm.util.ArtifactForFramework;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "report")
 public class Report extends AbstractEntity<ReportId> {
 
     private UserId reporterId;
