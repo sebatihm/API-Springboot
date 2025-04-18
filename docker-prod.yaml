@@ -1,0 +1,44 @@
+version: '1'
+
+services:
+  db:
+    image: postgres:16.0
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: my-postgres-db-pwd
+      POSTGRES_DB: copsbootdb
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  identity:
+    image: quay.io/keycloak/keycloak:22.0.1
+    container_name: keycloak
+    command: "start-dev --import-realm"
+    ports:
+      - "8180:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin-secret
+      KC_HOSTNAME: identity
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+    volumes:
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
+    depends_on:
+      - db
+
+
+  app:
+    image: sebatihm/api-springboot:0.3
+    container_name: springboot-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - identity
+
+volumes:
+  postgres-data:
