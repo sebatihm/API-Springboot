@@ -18,3 +18,5 @@ services:
       KC_HOSTNAME: 'localhost'
       KC_HEALTH_ENABLED: 'true'
       KC_METRICS_ENABLED: 'true'
+    volumes:
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
