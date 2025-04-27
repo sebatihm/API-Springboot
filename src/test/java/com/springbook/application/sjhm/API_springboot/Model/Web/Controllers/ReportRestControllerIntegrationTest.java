@@ -96,6 +96,7 @@ public class ReportRestControllerIntegrationTest {
 
         given()
                 .header("Authorization", "Bearer " + token) 
+                .contentType(ContentType.JSON) 
                 .body("""
                         {
                             "mobileToken": "c41536a5a8b9d3f14a7e5472a5322b5e1f76a6e7a9255c2c2e7e0d3a2c5b9d0"
