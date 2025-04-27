@@ -65,3 +65,7 @@ volumes:
 
 Sin embargo a pesar de que se logra ejecutar, como la guia marca que se tienen que obtener los token desde la maquina local (no los contenedores) y esto causa problemas con el cliente de keycloack ya que los issuer no coinciden lo cual hace que el token sea invalido.
 Aun asi el proyecto se puede ejecutar sin problemas en un entorno local
+
+## Ejecucion
+Para correr el docker-prod.yaml solo se necesita correr este comando.
+``docker-compose -f docker-prod.yaml up``
